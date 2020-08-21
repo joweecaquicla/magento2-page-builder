@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _mageUtils, _underscore, _config, _contentTypeFactory, _directives, _filterHtml) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _mageUtils, _underscore, _config, _contentTypeFactory, _styleRegistry, _directives, _filterHtml) {
   function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
   /**
@@ -8,6 +8,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
    * See COPYING.txt for license details.
    */
   var port = null;
+  var styleRegistry;
 
   var portDeferred = _jquery.Deferred();
 
@@ -145,6 +146,10 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
 
 
   function render(message) {
+    if (!styleRegistry) {
+      styleRegistry = new _styleRegistry(message.stageId);
+    }
+
     return new Promise(function (resolve, reject) {
       createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
         var element = document.createElement("div");

@@ -17,6 +17,7 @@
          css="active: !loading()"
          afterRender="afterRenderDeferred.resolve">
         <with args="rootContainer">
+            <div afterRender="function(){console.log($data);}"></div>
             <render args="{ name: preview.template, data: preview }" />
         </with>
     </div>

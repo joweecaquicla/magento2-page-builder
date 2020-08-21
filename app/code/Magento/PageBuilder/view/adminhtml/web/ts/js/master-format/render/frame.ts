@@ -13,11 +13,13 @@ import ConfigInterface from "../../config.types";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import createContentType from "../../content-type-factory";
 import ContentTypeInterface from "../../content-type.types";
+import StyleRegistry, {generateCss} from "../../content-type/style-registry";
 import decodeAllDataUrlsInString, { replaceWithSrc } from "../../utils/directives";
 import filterHtml from "../filter-html";
 import { TreeItem } from "./serialize";
 
 let port: MessagePort = null;
+let styleRegistry: StyleRegistry;
 const portDeferred: JQueryDeferred<MessagePort> = $.Deferred();
 const deferredTemplates: {[key: string]: JQueryDeferred<string>} = {};
 let lastRenderId: string;
@@ -142,6 +144,9 @@ function countContentTypes(rootContainer: ContentTypeCollectionInterface, count?
  * @param message
  */
 function render(message: {stageId: string, tree: TreeItem}) {
+    if (!styleRegistry) {
+        styleRegistry = new StyleRegistry(message.stageId);
+    }
     return new Promise((resolve, reject) => {
         createRenderTree(message.stageId, message.tree).then((rootContainer: ContentTypeCollectionInterface) => {
             const element = document.createElement("div");

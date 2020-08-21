@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/lib/knockout/template/loader", "Magento_Ui/js/modal/alert", "mageUtils", "underscore", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage", "Magento_PageBuilder/js/template-manager"], function (_jquery, _knockout, _translate, _events, _loader, _alert, _mageUtils, _underscore, _acl, _config, _contentTypeFactory, _panel, _stage, _templateManager) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/lib/knockout/template/loader", "Magento_Ui/js/modal/alert", "mageUtils", "underscore", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage", "Magento_PageBuilder/js/template-manager"], function (_jquery, _knockout, _translate, _events, _loader, _alert, _mageUtils, _underscore, _acl, _config, _contentTypeFactory, _styleRegistry, _panel, _stage, _templateManager) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -41,6 +41,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig(_stage.rootContainerName), null, this.id).then(function (rootContainer) {
         _this.stage = new _stage(_this, rootContainer);
+        _this.styleRegistry = new _styleRegistry(_this.stage.id);
 
         _this.isStageReady(true);
       });

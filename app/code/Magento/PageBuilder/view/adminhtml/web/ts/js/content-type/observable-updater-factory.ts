@@ -7,6 +7,7 @@ import ContentTypeConfigInterface from "../content-type-config.types";
 import converterPoolFactory from "../converter/converter-pool-factory";
 import massConverterPoolFactory from "../mass-converter/converter-pool-factory";
 import ObservableUpdater from "./observable-updater";
+import {getStyleRegistryForStage} from "./style-registry";
 
 /**
  * Create new observable updater instance
@@ -18,6 +19,7 @@ import ObservableUpdater from "./observable-updater";
 export default function create(
     config: ContentTypeConfigInterface,
     converterResolver: (config: object) => string,
+    stageId: string,
 ): Promise<ObservableUpdater> {
     const promises: Array<Promise<any>> = [
         converterPoolFactory(config.name),
@@ -31,6 +33,7 @@ export default function create(
                     converterPool,
                     massConverterPool,
                     converterResolver,
+                    getStyleRegistryForStage(stageId),
                 ),
             );
         }).catch((error) => {

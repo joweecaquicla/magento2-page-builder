@@ -6,5 +6,6 @@
 -->
 
 <div each="contentType.getChildren()" data-wrapper="true">
-    <render args="{ name: content.template, data: content }" />
+    <div afterRender="function(){console.log(content);}"/>
+    <render args="{ name: content.template, data: content }"/>
 </div>
